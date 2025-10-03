@@ -1,4 +1,4 @@
-# HAAFLAH
+# Hactoberfest - Haaflah
 
 Welcome to the **Hactoberfest OpenSource Challenge 2025**, an initiative powered by our amazing community of developers, designers, and tech enthusiasts!  
 This program is designed to inspire collaboration, hands-on learning, and meaningful contributions to real-world open-source projects.
