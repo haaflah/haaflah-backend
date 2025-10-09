@@ -6,10 +6,11 @@ This program is designed to inspire collaboration, hands-on learning, and meanin
 
 ## 🚀 About the Challenge
 
-This year, our flagship project is **Haaflah** — an open-source event management platform designed to revolutionize how organizers and attendees connect.
+This year, our flagship project is **Haaflah** — an open-source event management platform designed to revolutionize how organizers an
+d attendees connect.
 
 Participants will have the opportunity to collaborate on different parts of the product:
-- Frontend (React/Next.js)
+- Frontend (React)
 - Backend APIs & integrations
 - ML/AI modules (e.g., Face-ID based attendee check-in)
 - UI/UX design & accessibility

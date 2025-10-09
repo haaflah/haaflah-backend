@@ -60,6 +60,6 @@ Here’s the basic workflow:
 
 1. **Fork & Clone**
    ```bash
-   git fork https://github.com/haaflah/haaflah-frontend.git
+   git fork https://github.com/haaflah/haaflah-backend.git
    git clone <your-fork-url>
    cd haaflah-frontend
