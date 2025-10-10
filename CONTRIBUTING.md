@@ -62,4 +62,4 @@ Here’s the basic workflow:
    ```bash
    git fork https://github.com/haaflah/haaflah-backend.git
    git clone <your-fork-url>
-   cd haaflah-frontend
+   cd haaflah-backend
