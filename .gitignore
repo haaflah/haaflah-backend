@@ -1,9 +1,4 @@
 node_modules/
-dist/
-**/dist/
-build/
-.generated/
-.generated/**
 .env
 .env.*
 !.env.example
