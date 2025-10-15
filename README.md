@@ -12,8 +12,8 @@ d attendees connect.
 Participants will have the opportunity to collaborate on different parts of the product:
 - Frontend (React)
 - Backend APIs & integrations
-     Nodejs
-     Database- PostgreSQL
+     (Nodejs,
+     Database- PostgreSQL)
 - ML/AI modules (e.g., Face-ID based attendee check-in)
 - UI/UX design & accessibility
 - Documentation, testing, and community support
