@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url';
 import { sequelize } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
 
+import './workers/emailWorker.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

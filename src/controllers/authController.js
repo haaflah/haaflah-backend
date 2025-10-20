@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { User, PasswordReset } from '../models/index.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import { sendEmail } from '../utils/sendEmail.js';
+import { addEmailJob } from '../queues/emailQueue.js';
 import { passwordResetTemplate, welcomeEmailTemplate } from '../utils/emailTemplates.js';
 
 // ------------------------ REGISTER ------------------------
@@ -20,9 +20,9 @@ export const register = async (req, res) => {
     // Generate JWT
     const token = jwt.sign({ id: user.id, email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-    // Send Welcome Email
+    // Add welcome email to queue
     const html = welcomeEmailTemplate({ name: user.name });
-    await sendEmail({
+    await addEmailJob({
       to: user.email,
       subject: '🎉 Welcome to Haaflah!',
       html,
@@ -71,7 +71,8 @@ export const forgotPassword = async (req, res) => {
     const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
     const html = passwordResetTemplate({ name: user.name, resetLink });
 
-    await sendEmail({
+    // Add password reset email to queue
+    await addEmailJob({
       to: email,
       subject: 'Reset Your Haaflah Password',
       html,
