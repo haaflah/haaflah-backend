@@ -8,7 +8,7 @@ import { sequelize } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
-// import participantRoutes from './routes/participantRoutes.js';
+import participantRoutes from './routes/participantRoutes.js';
 // import formIntegrationRoutes from './routes/formIntegrationRoutes.js';
 // import streamRoutes from './routes/streamRoutes.js';
 
@@ -32,7 +32,7 @@ app.use('/stats', statsRoutes);
 // app.use('/integrations', formIntegrationRoutes);
 app.use('/events', eventRoutes);
 // app.use('/', streamRoutes);
-// app.use('/participants', participantRoutes);
+app.use('/participants', participantRoutes);
 
 const PORT = process.env.PORT || 4000;
 
