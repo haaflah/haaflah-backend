@@ -6,6 +6,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
+// import statsRoutes from './routes/statsRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
+// import participantRoutes from './routes/participantRoutes.js';
+// import formIntegrationRoutes from './routes/formIntegrationRoutes.js';
+// import streamRoutes from './routes/streamRoutes.js';
 
 import './workers/emailWorker.js';
 
@@ -16,13 +21,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 // app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+// Lightweight admin UI for testing stream endpoints
+// app.use('/admin', express.static(path.join(__dirname, 'assets', 'admin'), { index: 'stream.html' }));
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Event Management API');
 });
 app.use('/auth', authRoutes);
-// app.use('/api/events', eventRoutes);
-// app.use('/api/participants', participantRoutes);
+// app.use('/stats', statsRoutes);
+// app.use('/integrations', formIntegrationRoutes);
+app.use('/events', eventRoutes);
+// app.use('/', streamRoutes);
+// app.use('/participants', participantRoutes);
 
 const PORT = process.env.PORT || 4000;
 
