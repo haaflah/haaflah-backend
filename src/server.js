@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
-// import statsRoutes from './routes/statsRoutes.js';
+import statsRoutes from './routes/statsRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 // import participantRoutes from './routes/participantRoutes.js';
 // import formIntegrationRoutes from './routes/formIntegrationRoutes.js';
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Event Management API');
 });
 app.use('/auth', authRoutes);
-// app.use('/stats', statsRoutes);
+app.use('/stats', statsRoutes);
 // app.use('/integrations', formIntegrationRoutes);
 app.use('/events', eventRoutes);
 // app.use('/', streamRoutes);
