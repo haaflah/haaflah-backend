@@ -13,11 +13,13 @@ const router = express.Router();
 
 // Public routes
 router.get('/', getAllEvents);
-router.get('/:id', getEventById);
 
 // Protected routes (require authentication)
 router.post('/', authMiddleware, createEvent);
 router.get('/my/events', authMiddleware, getMyEvents);
+
+// Generic routes (should come after specific ones)
+router.get('/:id', getEventById);
 router.put('/:id', authMiddleware, updateEvent);
 router.delete('/:id', authMiddleware, deleteEvent);
 
