@@ -1,7 +1,7 @@
 import {sequelize} from "../config/sequelize.js"
 import userModel from './user.model.js';
 import eventModel from './event.model.js';
-// import participantModel from './participant.model.js';
+import participantModel from './participant.model.js';
 import passwordResetModel from './passwordReset.model.js';
 // import formIntegrationModel from './formIntegration.model.js';
 // import streamModel from './stream.model.js';
@@ -9,7 +9,7 @@ import passwordResetModel from './passwordReset.model.js';
 
 const User = userModel(sequelize);
 const Event = eventModel(sequelize);
-// const Participant = participantModel(sequelize);
+const Participant = participantModel(sequelize);
 const PasswordReset = passwordResetModel(sequelize);
 // const FormIntegration = formIntegrationModel(sequelize);
 // const Stream = streamModel(sequelize);
@@ -22,8 +22,8 @@ PasswordReset.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 User.hasMany(Event, { foreignKey: 'organizerId', as: 'events' });
 Event.belongsTo(User, { foreignKey: 'organizerId', as: 'organizer' });
 
-// Event.hasMany(Participant, { foreignKey: 'eventId', as: 'participants' });
-// Participant.belongsTo(Event, { foreignKey: 'eventId', as: 'event' });
+Event.hasMany(Participant, { foreignKey: 'eventId', as: 'participants' });
+Participant.belongsTo(Event, { foreignKey: 'eventId', as: 'event' });
 
 // Integrations
 // User.hasMany(FormIntegration, { foreignKey: 'organizerId', as: 'formIntegrations' });
@@ -39,4 +39,4 @@ Event.belongsTo(User, { foreignKey: 'organizerId', as: 'organizer' });
 // Stream.hasMany(StreamDestination, { foreignKey: 'streamId', as: 'destinations' });
 // StreamDestination.belongsTo(Stream, { foreignKey: 'streamId', as: 'stream' });
 
-export { sequelize, User, Event, PasswordReset };
+export { sequelize, User, Event, PasswordReset, Participant };
