@@ -12,7 +12,7 @@ import { authMiddleware } from '../middleware/auth.js';
 const router = express.Router();
 
 // Public routes
-router.get('/', getAllEvents);
+router.get('/', authMiddleware, getAllEvents);
 
 // Protected routes (require authentication)
 router.post('/', authMiddleware, createEvent);
