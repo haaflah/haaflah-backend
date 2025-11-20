@@ -151,7 +151,7 @@ export const bulkCheckIn = async (req, res) => {
   try {
     const { ids } = req.body;
 
-    if (!Array.isArray(ids) && !query) {
+    if (!Array.isArray(ids)) {
       return res.status(400).json({ error: 'Provide ids array' });
     }
 
