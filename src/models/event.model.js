@@ -37,8 +37,8 @@ export default (sequelize) => {
     
     // Status
     status: { 
-      type: DataTypes.ENUM('draft', 'published', 'ongoing', 'completed', 'cancelled'), 
-      defaultValue: 'draft' 
+      type: DataTypes.ENUM( 'published', 'ongoing', 'completed', 'cancelled'), 
+      defaultValue: 'published' 
     },
     
     

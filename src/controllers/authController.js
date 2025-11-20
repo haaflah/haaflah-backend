@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     const user = await User.create({ name, email, password: hashed, role: role || 'organizer' });
 
     // Generate JWT
-    const token = jwt.sign({ id: user.id, email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user.id, email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     // Add welcome email to queue
     const html = welcomeEmailTemplate({ name: user.name });

@@ -1,4 +1,4 @@
-import { Participant, Event, User } from '../models/index.js';
+import { Participant, Event } from '../models/index.js';
 import { Op } from 'sequelize';
 
 // Register a participant for an event (public)
@@ -7,6 +7,13 @@ export const registerParticipant = async (req, res) => {
     const { eventId } = req.params;
     const event = await Event.findByPk(eventId);
     if (!event) return res.status(404).json({ error: 'Event not found' });
+    if (event.capacity === event.totalRegistrations && event.capacity !== null) return res.status(400).json({ error: 'Event has reached full capacity' })
+    if (event.status === 'completed') return res.status(400).json({ error: 'Cannot register for acompleted event' });
+    if (event.status === 'cancelled') return res.status(400).json({ error: 'Cannot register for a cancelled event' });
+    if (new Date(event.date) < new Date()) return res.status(400).json({ error: 'Cannot register for past event' });
+    if (event.registrationDeadline && new Date(event.registrationDeadline) < new Date()) {
+      return res.status(400).json({ error: 'Registration deadline has passed' });
+    }
 
     const payload = {
       ...req.body,
@@ -14,6 +21,10 @@ export const registerParticipant = async (req, res) => {
     };
 
     const participant = await Participant.create(payload);
+
+    // Increment total registrations on event
+    await event.increment('totalRegistrations', { by: 1 });
+
     res.status(201).json({ participant });
   } catch (err) {
     console.error(err);
@@ -126,7 +137,9 @@ export const checkInParticipant = async (req, res) => {
     }
 
     await participant.update({ checkedIn: true, checkedInAt: new Date() });
-    res.json({ participant });
+
+    event.increment('totalAttendees', { by: 1 });
+    res.status(200).json({ message: `${participant.firstName} Participant checked in` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to check in participant' });
@@ -136,10 +149,10 @@ export const checkInParticipant = async (req, res) => {
 // Bulk check-in (protected) - accepts { ids: [] } or { query: {...} }
 export const bulkCheckIn = async (req, res) => {
   try {
-    const { ids, query } = req.body;
+    const { ids } = req.body;
 
     if (!Array.isArray(ids) && !query) {
-      return res.status(400).json({ error: 'Provide ids array or a query object' });
+      return res.status(400).json({ error: 'Provide ids array' });
     }
 
     let updated;
@@ -158,22 +171,9 @@ export const bulkCheckIn = async (req, res) => {
         { checkedIn: true, checkedInAt: new Date() },
         { where: { id: { [Op.in]: ids } } }
       );
-    } else {
-      // query-based bulk update (e.g., { eventId: '...' })
-      // validate permission based on eventId if provided
-      if (query.eventId) {
-        const event = await Event.findByPk(query.eventId);
-        if (!event) return res.status(404).json({ error: 'Associated event not found' });
-        if (req.user.role !== 'organizer' && event.organizerId !== req.user.id) {
-          return res.status(403).json({ error: 'Access denied' });
-        }
-      }
-      updated = await Participant.update(
-        { checkedIn: true, checkedInAt: new Date() },
-        { where: query }
-      );
-    }
 
+      event.increment('totalAttendees', { by: ids.length });
+    } 
     res.json({ message: 'Bulk check-in completed', result: updated });
   } catch (err) {
     console.error(err);
